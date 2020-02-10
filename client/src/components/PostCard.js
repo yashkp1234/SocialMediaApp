@@ -1,19 +1,27 @@
-import React from "react";
-import { Card, Icon, Label, Image, Button } from "semantic-ui-react";
+import React, { useContext } from "react";
+import { Card, Icon, Label, Image, Button, Popup } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-function PostCard({
-  post: { body, createdAt, id, username, likeCount, commentCount, likes }
-}) {
-  let tes = true;
-  function likePost() {
-    console.log("Like Post");
-  }
+import { AuthContext } from "../context/auth";
+import LikeButton from "./LikeButton";
+import DeleteButton from "./DeleteButton";
 
-  function commentOnPost() {
-    console.log("Like Post");
+function PostCard({
+  post: {
+    body,
+    createdAt,
+    id,
+    username,
+    likeCount,
+    comments,
+    commentCount,
+    likes
   }
+}) {
+  const { user } = useContext(AuthContext);
+  const didComment =
+    comments.filter(comment => comment.username === user.username).length > 0;
   return (
     <Card fluid>
       <Card.Content>
@@ -29,34 +37,48 @@ function PostCard({
         <Card.Description>{body}</Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button
-          basic
-          as="div"
-          labelPosition="right"
-          onClick={likePost}
-          color="red"
-          icon="heart"
-          label={{
-            basic: true,
-            color: "red",
-            pointing: "left",
-            content: likeCount
-          }}
-        />
-        <Button
-          basic
-          as="div"
-          labelPosition="right"
-          onClick={commentOnPost}
-          color="teal"
-          icon="comments"
-          label={{
-            basic: true,
-            color: "teal",
-            pointing: "left",
-            content: commentCount
-          }}
-        />
+        <LikeButton user={user} post={{ id, likes, likeCount }}></LikeButton>
+        <Popup
+          content="Comment on Yell"
+          inverted
+          trigger={
+            didComment ? (
+              <Button
+                as="link"
+                labelPosition="right"
+                as={Link}
+                to={`/posts/${id}`}
+                color="teal"
+                icon="comments"
+                label={{
+                  basic: true,
+                  color: "teal",
+                  pointing: "left",
+                  content: commentCount
+                }}
+              />
+            ) : (
+              <Button
+                basic
+                as="link"
+                labelPosition="right"
+                as={Link}
+                to={`/posts/${id}`}
+                color="teal"
+                icon="comments"
+                label={{
+                  basic: true,
+                  color: "teal",
+                  pointing: "left",
+                  content: commentCount
+                }}
+              />
+            )
+          }
+        ></Popup>
+        {user && user.username === username && (
+          <DeleteButton postId={id}></DeleteButton>
+        )}
       </Card.Content>
     </Card>
   );

@@ -11,7 +11,10 @@
 }
 
 .content-container {
-  padding: 1rem !important;
+  padding-left: 6em !important;
+  padding-right: 6em !important;
+  padding-top: 1em !important;
+  padding-bottom: 8em;
 }
 
 .full-container {
@@ -30,4 +33,9 @@ h1 {
 
 .ui.inverted.attached.segment {
   border-color: transparent;
+}
+
+.ui.red.button:focus,
+.ui.red.buttons .button:focus {
+  background-color: #db2828;
 }

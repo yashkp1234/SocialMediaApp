@@ -9,7 +9,7 @@ import { createUploadLink } from "apollo-upload-client";
 const port = process.env.PORT || 5000;
 
 const uploadLink = createUploadLink({
-  uri: "http://localhost:" + port
+  uri: "https://yellyash.herokuapp.com/" + port
 });
 
 const authLink = setContext(() => {

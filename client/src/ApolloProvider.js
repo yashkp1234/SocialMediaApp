@@ -2,12 +2,14 @@ import React from "react";
 import App from "./App";
 import ApolloClient from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import { createHttpLink } from "apollo-link-http";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { setContext } from "apollo-link-context";
+import { createUploadLink } from "apollo-upload-client";
 
-const httpLink = createHttpLink({
-  uri: "http://localhost:5000"
+const port = process.env.PORT || 5000;
+
+const uploadLink = createUploadLink({
+  uri: "http://localhost:" + port
 });
 
 const authLink = setContext(() => {
@@ -20,7 +22,7 @@ const authLink = setContext(() => {
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: authLink.concat(uploadLink),
   onError: e => {
     console.log(e);
   },

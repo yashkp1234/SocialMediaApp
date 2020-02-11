@@ -20,13 +20,21 @@ import DeleteButton from "../components/DeleteButton";
 
 function SinglePost(props) {
   const postId = props.match.params.postId;
+  const urlA = props.match.params.urlA;
+  const urlB = props.match.params.urlB;
+  const picURL =
+    urlA === "None"
+      ? "https://react.semantic-ui.com/images/avatar/large/molly.png"
+      : "http://res.cloudinary.com/yellappyash/image/upload/" +
+        urlA +
+        "/" +
+        urlB;
   const { user } = useContext(AuthContext);
   const commentInputRef = useRef(null);
 
   const [comment, setComment] = useState("");
-  const [commented, setCommented] = useState(false);
 
-  const { loading, data, err } = useQuery(FETCH_POST_QUERY, {
+  const { loading, data } = useQuery(FETCH_POST_QUERY, {
     variables: {
       postId
     }
@@ -101,11 +109,7 @@ function SinglePost(props) {
         <Grid>
           <Grid.Row>
             <Grid.Column width={2}>
-              <Image
-                src="https://react.semantic-ui.com/images/avatar/large/molly.png"
-                size="large"
-                float="right"
-              ></Image>
+              <Image src={picURL} size="large" float="right"></Image>
             </Grid.Column>
             <Grid.Column width={10}>
               <Card fluid>

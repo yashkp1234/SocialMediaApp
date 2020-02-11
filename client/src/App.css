@@ -39,3 +39,8 @@ h1 {
 .ui.red.buttons .button:focus {
   background-color: #db2828;
 }
+
+.icon_corner {
+  width: 4rem;
+  height: 4rem;
+}

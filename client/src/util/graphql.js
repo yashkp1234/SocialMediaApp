@@ -45,3 +45,9 @@ export const CREATE_POST_MUTATION = gql`
     }
   }
 `;
+
+export const GET_PICTURE_QUERY = gql`
+  query($username: String!) {
+    getPicture(username: $username)
+  }
+`;

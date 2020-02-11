@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, Fragment } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { Grid, Transition } from "semantic-ui-react";
 
